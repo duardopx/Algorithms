@@ -1,74 +1,113 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdbool.h>
+#include <limits.h>
 
-#define QUEUE_SIZE 0x64
 
-int queue[QUEUE_SIZE];
-
-int queue_pointer = -0x1;
-int base_pointer = 0x0;
-
-char queue_empty()
+struct queue
 {
-	if (queue_pointer < 0x0)
-	{
-		printf("> Queue is empty");
-		return 0x1;
-	}
+	int rear;
+	int size;
+	int front;
+	int * array;
+	unsigned capacity;
+};
 
-	return 0x0;
+bool is_empty(struct queue * queue)
+{
+	return  queue->size == 0x0;
 }
 
-void push(int * queue, int value)
+bool is_full (struct queue * queue)
 {
+	return queue->size == queue->capacity;
+}
 
-	if (queue_pointer >= QUEUE_SIZE)
-	{
+struct queue * create_queue (unsigned capacity)
+{
+	struct queue * new_queue = (struct queue *)malloc(sizeof(struct queue));
+	new_queue->capacity = capacity;
+	new_queue->rear = -0x1;
+	new_queue->front = 0x0;
+	new_queue->size = 0x0;
+	new_queue->array = (int *)malloc(new_queue->capacity * sizeof(int));
+
+	return new_queue;
+}
+
+int rear(struct queue * queue)
+{
+	if (is_empty(queue))
+		return INT_MIN;
+
+	return queue->array[queue->rear];
+}
+
+int front(struct queue * queue)
+{
+	if (is_empty(queue))
+		return INT_MIN;
+
+	return queue->array[queue->front];
+}
+
+void dequeue(struct queue * queue)
+{
+	if (is_empty(queue))
 		return;
-	}
 
-	queue_pointer += 0x1;
-
-	printf("> queue_pointer value: [%d]\n", queue_pointer);
-	queue[queue_pointer] = value;
+	queue->size--;
+	queue->front++;
 }
 
-
-int pop(int * queue)
+void enqueue(struct queue * queue, int value)
 {
-	int return_element = queue[base_pointer];
-	base_pointer += 0x1;
-	
-	return return_element;
+	if (is_full(queue))
+		return;
+
+	queue->size++;
+	queue->array[(++queue->rear) % queue->size] = value;
 }
 
-void print_queue()
+void print_struct(struct queue * queue)
 {
 	int i;
 
-	for (i = 0x0; i <= queue_pointer; i++)
+	for (i = 0x0; i < queue->size; i++)
 	{
-		printf("{%d:[%d]}\n", i, queue[i]);
+		printf("{%d:[%d]}\n", i, queue->array[i]);
 	}
+
 	puts("");
 }
 
 
 int main(int argc, char ** argv)
 {
-	int fodac;
-	push(queue, 0xa);
-	push(queue, 0xb);
-	push(queue, 0xc);
-	push(queue, 0xd);
+	struct queue * queue;
+	queue = create_queue(0xa);
 
-	print_queue();
 
-	fodac = pop(queue);
+	enqueue(queue, 0x0);
+	enqueue(queue, 0x1);
+	enqueue(queue, 0x2);
+	enqueue(queue, 0x3);
+	enqueue(queue, 0x4);
+	enqueue(queue, 0x5);
+	enqueue(queue, 0x6);
+	enqueue(queue, 0x7);
+	enqueue(queue, 0x8);
+	enqueue(queue, 0x9);
+	enqueue(queue, 0x9);
+	enqueue(queue, 0x9);
 
-	print_queue();
-	printf("%d\n", fodac);
+	print_struct(queue);
+
+	dequeue(queue);
+	dequeue(queue);
+	dequeue(queue);
+
+	print_struct(queue);
 
 	return 0x0;
 }
