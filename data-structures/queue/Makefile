@@ -1,2 +1,2 @@
 all:
-	cc queue.c -o queue -Wall -pedantic -std=c89
+	cc queue.c -o queue -Wall -pedantic -ansi
