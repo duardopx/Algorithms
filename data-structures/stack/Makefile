@@ -1,2 +1,2 @@
 all:
-	cc stack.c -o stack -Wall -pedantic -std=c89
+	cc stack.c -o stack -Wall -pedantic -ansi
