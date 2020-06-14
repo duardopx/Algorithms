@@ -76,6 +76,40 @@ struct node * search(struct linked_list * linked_list, int target)
 	return NULL;
 }
 
+void delete(struct linked_list * linked_list, int target)
+{
+
+	if (search(linked_list, target) == NULL)
+	{
+		puts("> Element not found to be removed");
+		return;
+	}
+
+	linked_list->size--;
+	linked_list->list = linked_list->head->next;
+
+
+	if ((linked_list->list == linked_list->head->next) &&
+			(linked_list->list->data ==  target))
+	{
+		struct node * new_next = linked_list->list->next;
+		linked_list->list = new_next;
+		linked_list->head->next = linked_list->list;
+
+		return;
+	}
+
+	while (linked_list->list->next->data != target)
+	{
+		linked_list->list = linked_list->list->next;
+	}
+	
+	struct node * new_next = linked_list->list->next->next;
+	linked_list->list->next->next = NULL;
+	linked_list->list->next = new_next;
+
+}
+
 
 void print_linked_list(struct linked_list * linked_list)
 {
@@ -85,7 +119,7 @@ void print_linked_list(struct linked_list * linked_list)
 
 	while (linked_list->list != linked_list->tail)
 	{
-		printf("{%d : %d}\n", count, linked_list->list->data);
+		printf("{%d:%d}\n", count, linked_list->list->data);
 		linked_list->list = linked_list->list->next;
 		count++;
 	}
@@ -103,12 +137,12 @@ int main(int argc, char ** argv)
 	puts("Adding nodes {0xa ... 0xf}");
 	puts(".................................");
 
-	add(linked_list, create_node(0xa));
-	add(linked_list, create_node(0xb));
-	add(linked_list, create_node(0xc));
-	add(linked_list, create_node(0xd));
-	add(linked_list, create_node(0xe));
-	add(linked_list, create_node(0xf));
+	add(linked_list, create_node(0x0));
+	add(linked_list, create_node(0x1));
+	add(linked_list, create_node(0x2));
+	add(linked_list, create_node(0x3));
+	add(linked_list, create_node(0x4));
+	add(linked_list, create_node(0x5));
 
 
 	print_linked_list(linked_list);
@@ -118,8 +152,12 @@ int main(int argc, char ** argv)
 	puts("Deleting Elements");
 	puts(".................................");
 
-	delete(linked_list, 0xf);
-	printf("> Target -> %d", 0xf);
+	delete(linked_list, 0x0);
+	delete(linked_list, 0x5);
+	delete(linked_list, 0x3);
+
+	printf("> List data: %d\n", linked_list->list->data);
+	print_linked_list(linked_list);
 
 
 	puts(".................................");
