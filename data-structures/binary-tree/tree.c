@@ -44,6 +44,19 @@ struct node * search(struct node * root, int target)
 	return search(root->right, target);
 }
 
+struct node * delete(struct node * root, int target)
+{
+	if(root == NULL)
+		return root;
+
+	if (root->data > target)
+		root->left = delete(root->left, target);
+
+	else if (root->data < target)
+		root->right = delete(root->right, target);
+
+}
+
 void in_order(struct node * root)
 {
 	if (root == NULL)
@@ -90,20 +103,11 @@ int main(int argc, char ** argv)
 
 	puts("[TREE]");
 	puts(".............................");
-	/* printf("> root data -> %d\n", root->data); */
-	post_order(root);
-	puts("");
-	puts(".............................");
+
 
 	in_order(root);
 	puts("");
 	puts(".............................");
-
-	pre_order(root);
-	puts("");
-	puts(".............................");
-
-	/*4 6 10 11*/
 
 	puts(".............................");
 
