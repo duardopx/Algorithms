@@ -1,13 +1,6 @@
-/*TODO implment get_minimun function  */
 #include <stdio.h>
 #include <stdlib.h>
-
-struct node
-{
-	int data;
-	struct node * left;
-	struct node * right;
-};
+#include "../include/binary_search_tree.h"
 
 struct node * small_node(struct node * root)
 {
@@ -121,34 +114,3 @@ void post_order(struct node * root)
 	printf("[%d]", root->data);
 }
 
-int main(int argc, char ** argv)
-{
-	struct node * root = NULL;
-
-	root = insert(root, 0x8);
-
-	insert(root, 0x1);
-	insert(root, 0x3);
-	insert(root, 0x6);
-	insert(root, 0x4);
-	insert(root, 0x7);
-
-	insert(root, 0xa);
-	insert(root, 0xd);
-
-
-	puts("[TESTS]");
-	puts(".............................");
-
-	in_order(root);
-	puts("");
-	puts(".............................");
-
-	delete(root, 0x8);
-
-	in_order(root);
-	puts("");
-	puts(".............................");
-
-	return 0x0;
-}

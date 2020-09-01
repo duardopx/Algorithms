@@ -2,15 +2,9 @@
 #include <stdlib.h>
 #include <stdbool.h>
 #include <limits.h>
+#include "../include/stack.h"
 
 
-struct stack
-{
-	int size;
-	int top;
-	int * array;
-	unsigned capacity;
-};
 
 bool is_empty(struct stack * stack)
 {
@@ -64,29 +58,3 @@ void print_struct(struct stack * stack)
 	puts("");
 }
 
-
-int main(int argc, char ** argv)
-{
-	struct stack * stack = create_stack(0xa);
-
-	push(stack, 0xa);
-	push(stack, 0x1);
-	push(stack, 0x2);
-	push(stack, 0x3);
-	push(stack, 0x4);
-
-	print_struct(stack);
-
-	pop(stack);
-	pop(stack);
-
-	print_struct(stack);
-
-	push(stack, 0x3);
-	push(stack, 0x4);
-
-	print_struct(stack);
-
-
-	return 0x0;
-}

@@ -1,5 +1,5 @@
 all:
-	cc linked_list.c -o linked_list -Wall -pedantic -std=c89
+	cc main.c -o linked_list ./src/linked_list.c -Wall -pedantic -std=c89
 
 debug:
-	cc linked_list.c -o linked_list -Wall -pedantic -std=c89 -g
+	cc main.c -o ./src/linked_list -Wall -pedantic -std=c89 -g

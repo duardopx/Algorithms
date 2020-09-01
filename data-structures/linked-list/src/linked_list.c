@@ -1,21 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include "../include/linked_list.h"
 
-
-struct node
-{
-	int data;
-	struct node * next;
-};
-
-
-struct linked_list
-{
-	int size;
-	struct node * head;
-	struct node * tail;
-	struct node * list;
-};
 
 
 struct node * create_node(int value)
@@ -34,8 +20,6 @@ struct linked_list * create_linkedlist()
 	new_linked_list->head = create_node(0x0);
 	new_linked_list->tail = create_node(0x0);
 
-
-
 	return new_linked_list;
 }
 
@@ -49,8 +33,6 @@ void add(struct linked_list * linked_list, struct node * node)
 		linked_list->list = node;
 		linked_list->head->next = linked_list->list;
 		linked_list->list->next = linked_list->tail;
-
-		/* printf("list->data: %d\n", linked_list->list->data); */
 
 		return;
 	}
@@ -100,10 +82,9 @@ void delete(struct linked_list * linked_list, int target)
 	}
 
 	while (linked_list->list->next->data != target)
-	{
 		linked_list->list = linked_list->list->next;
-	}
 	
+
 	struct node * new_next = linked_list->list->next->next;
 	linked_list->list->next->next = NULL;
 	linked_list->list->next = new_next;
@@ -123,53 +104,4 @@ void print_linked_list(struct linked_list * linked_list)
 		linked_list->list = linked_list->list->next;
 		count++;
 	}
-}
-
-
-
-
-int main(int argc, char ** argv)
-{
-	struct linked_list * linked_list;
-	linked_list = create_linkedlist();
-	
-	puts(".................................");
-	puts("Adding nodes {0xa ... 0xf}");
-	puts(".................................");
-
-	add(linked_list, create_node(0x0));
-	add(linked_list, create_node(0x1));
-	add(linked_list, create_node(0x2));
-	add(linked_list, create_node(0x3));
-	add(linked_list, create_node(0x4));
-	add(linked_list, create_node(0x5));
-
-
-	print_linked_list(linked_list);
-
-
-	puts(".................................");
-	puts("Deleting Elements");
-	puts(".................................");
-
-	delete(linked_list, 0x0);
-	delete(linked_list, 0x5);
-	delete(linked_list, 0x3);
-
-	printf("> List data: %d\n", linked_list->list->data);
-	print_linked_list(linked_list);
-
-
-	puts(".................................");
-	puts("Size");
-	puts(".................................");
-
-	printf("Linked list Size: %d\n", linked_list->size);
-
-
-
-
-	/* print_linked_list(linked_list); */
-
-	return 0x0;
 }

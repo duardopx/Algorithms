@@ -2,16 +2,8 @@
 #include <stdlib.h>
 #include <stdbool.h>
 #include <limits.h>
+#include "../include/queue.h"
 
-
-struct queue
-{
-	int rear;
-	int size;
-	int front;
-	int * array;
-	unsigned capacity;
-};
 
 bool is_empty(struct queue * queue)
 {
@@ -81,33 +73,3 @@ void print_struct(struct queue * queue)
 	puts("");
 }
 
-
-int main(int argc, char ** argv)
-{
-	struct queue * queue;
-	queue = create_queue(0xa);
-
-
-	enqueue(queue, 0x0);
-	enqueue(queue, 0x1);
-	enqueue(queue, 0x2);
-	enqueue(queue, 0x3);
-	enqueue(queue, 0x4);
-	enqueue(queue, 0x5);
-	enqueue(queue, 0x6);
-	enqueue(queue, 0x7);
-	enqueue(queue, 0x8);
-	enqueue(queue, 0x9);
-	enqueue(queue, 0x9);
-	enqueue(queue, 0x9);
-
-	print_struct(queue);
-
-	dequeue(queue);
-	dequeue(queue);
-	dequeue(queue);
-
-	print_struct(queue);
-
-	return 0x0;
-}
